@@ -1,0 +1,72 @@
+<div class="container-fluid">
+    <div class="row mt-5">
+        <div class="col"></div>
+        <div class="col-6">
+            <div class="card shadow">
+                <div class="card-body">
+                    <div *ngIf="!editMode; else editModeTemplate">
+                        <!-- -------------------------------------- -->
+                        <!-- Display profile data in read-only mode -->
+                        <!-- -------------------------------------- -->
+                        <div class="nb-3">
+                            <h4 class="text-dark text-muted">Profile</h4>
+                        </div>
+                        <div class="mb-3">
+                            <p *ngIf="userData.role === 'jobSeeker' && !isCompany"><strong>Email:</strong> {{ userEmail }}</p>
+                            <p *ngIf="userData.role === 'jobSeeker' && !isCompany"><strong>Role:</strong> {{ userData.role }}</p>
+
+                            <!-- Display profile data based on user role -->
+                            <div>
+                                <p><strong>Name:</strong> {{ userData.name }}</p>
+                                <p><strong>Job Preference:</strong> {{ userData.jobPreference }}</p>
+                                <p><strong>Contact Info:</strong> {{ userData.contactInfo }}</p>
+                                <p><strong>Resume:</strong> <a [href]="userData.resume" target="_blank"
+                                        class="resume-link">Resume</a></p>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-info"  *ngIf="userData.role === 'jobSeeker' && !isCompany" (click)="toggleEditMode()">Edit Profile</button>
+                    </div>
+                    <ng-template #editModeTemplate>
+                        <!-- -------------------------------------- -->
+                        <!-- Display form for updating profile data -->
+                        <!-- -------------------------------------- -->
+                        <form (ngSubmit)="updateProfile()">
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" [(ngModel)]="userEmail"
+                                    disabled>
+                            </div>
+                            <div *ngIf="userData.role === 'jobSeeker'">
+                                <div class="mb-3">
+                                    <label for="Name" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="Name" name="Name"
+                                        [(ngModel)]="userData.name">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="contactInfo" class="form-label">Contact Info</label>
+                                    <input type="text" class="form-control" id="contactInfo" name="contactInfo"
+                                        [(ngModel)]="userData.contactInfo">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="jobPreference" class="form-label">job Preference</label>
+                                    <input type="text" class="form-control" id="jobPreference" name="jobPreference"
+                                        [(ngModel)]="userData.jobPreference">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="resume" class="form-label">Resume</label>
+                                    <input type="file" class="form-control" id="resume" name="resume"
+                                        accept=".pdf,.doc,.docx" (change)="onResumeChange($event)">
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <button type="submit" class="btn btn-info save-button">Save Changes</button>
+                                <button type="button" class="btn btn-secondary" (click)="toggleEditMode()">Cancel</button>
+                            </div>                            
+                        </form>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+        <div class="col"></div>
+    </div>
+</div>

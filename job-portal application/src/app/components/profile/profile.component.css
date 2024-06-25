@@ -1,0 +1,12 @@
+.resume-link {
+    color: #007bff; /* Change link color to blue */
+    text-decoration: none; /* Remove underline */
+}
+
+.resume-link:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+
+.save-button {
+    margin-right: 25px; /* Adjust the margin value as needed */
+}

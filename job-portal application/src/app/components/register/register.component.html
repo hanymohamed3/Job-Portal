@@ -1,0 +1,92 @@
+<div class="container-fluid">
+    <div class="row mt-5">
+        <div class="col"></div>
+        <div class="col-md-5">
+            <div class="card shadow">
+                <div class="card-body">
+                    <form>
+                        <div class="text-center mb-4">
+                            <h4 class="text-dark"> Register </h4>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Email</label>
+                            <input type="email" class="form-control" name="email" [(ngModel)]="email"
+                                placeholder="Enter your email address">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Password</label>
+                            <input type="password" class="form-control" name="password" [(ngModel)]="password"
+                                placeholder="Enter your password">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">User Type:</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="userType" value="jobSeeker"
+                                    [(ngModel)]="role">
+                                <label class="form-check-label">Job Seeker</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="userType" value="company"
+                                    [(ngModel)]="role">
+                                <label class="form-check-label">Company</label>
+                            </div>
+                        </div>
+                        <!-- ------------------------------------------- -->
+                        <!-- Show job seeker fields if role is jobSeeker -->
+                        <!-- ------------------------------------------ -->
+                        <div *ngIf="role === 'jobSeeker'">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" class="form-control" name="name" [(ngModel)]="name"
+                                    placeholder="Enter your name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="contactInfo" class="form-label">Contact Info</label>
+                                <input type="text" class="form-control" name="contactInfo" [(ngModel)]="contactInfo"
+                                    placeholder="Enter contact information (e.g., phone number, email)">
+                            </div>
+                            <div class="mb-3">
+                                <label for="resume" class="form-label">Resume</label>
+                                <!-- <input type="file" class="form-control" id="resume" name="resume" [(ngModel)]="resume"> -->
+                                <input type="file" class="form-control" id="resume" name="resume" (change)="onResumeChange($event)">
+                            </div>
+                            <div class="mb-3">
+                                <label for="jobPreference" class="form-label">Job Preference</label>
+                                <input type="text" class="form-control" name="jobPreference" [(ngModel)]="jobPreference"
+                                    placeholder="Enter your job preference (optional)">
+                            </div>
+                        </div>
+                        <!-- -------------------------------------- -->
+                        <!-- Show company fields if role is company -->
+                        <!-- -------------------------------------- -->
+                        <div *ngIf="role === 'company'">
+                            <div class="mb-3">
+                                <label for="contactInfo" class="form-label">Company Contact Info</label>
+                                <input type="text" class="form-control" name="contactInfo" [(ngModel)]="contactInfo"
+                                    placeholder="Enter contact information (e.g., phone number, email)">
+                            </div>
+                            <div class="mb-3">
+                                <label for="companyDescription" class="form-label">Company Description</label>
+                                <input type="text" class="form-control" name="companyDescription"
+                                    [(ngModel)]="companyDescription"
+                                    placeholder="Enter a brief description of your company">
+                            </div>
+                            <div class="mb-3">
+                                <label for="logo" class="form-label">Company Logo</label>
+                                <input type="file" class="form-control" id="logo" name="logo" (change)="onFileChange($event)">
+                                <img *ngIf="logoUrl" [src]="logoUrl" alt="Uploaded Logo" class="img-fluid">
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-info btn-register" (click)="register()">Register</button>
+
+                        <div class="text-center mt-3">
+                            <a href="/login" style="text-decoration: none;">Already have an account? <span
+                                    class="text-info">Login</span></a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col"></div>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+<div *ngIf="job" class="container">
+  <h2>{{ job.job_title }} - Applications</h2>
+
+  <!-- Search Bar -->
+  <input type="text" [(ngModel)]="searchQuery" (input)="filterAppliedUsers()" placeholder="Search applied users (names)" class="form-control mb-3">
+
+  <ng-container *ngIf="appliedUsersFiltered.length > 0; else noApplications">
+    <ul class="list-group">
+      <li *ngFor="let user of appliedUsersFiltered" class="list-group-item">
+        <div>
+          <strong>Name:</strong> {{ user.name }}
+        </div>
+        <div>
+          <strong>Role:</strong> {{ user.role }}
+        </div>
+        <div>
+          <strong>Contact Info:</strong> {{ user.contactInfo }}
+        </div>
+        <p><strong>Resume:</strong> <a [href]="user.resume" target="_blank" class="resume-link">Resume</a></p>
+        
+        <button class="button-18-3" (click)="acceptApplication(user)">Accept</button>
+        <button class="button-18-2" (click)="showProfile(user)">Show Profile</button>
+        <button class="button-18" (click)="rejectApplication(user)">Reject</button>
+
+      </li>
+    </ul>
+  </ng-container>
+  <ng-template #noApplications>
+    <p class="no-applications-message">No applications for this job yet.</p>
+  </ng-template>
+</div>

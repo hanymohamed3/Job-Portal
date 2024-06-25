@@ -1,0 +1,33 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8 mx-auto mt-4">
+            <div class="card">
+                <div class="card-body">
+                    <div *ngIf="savedJobs && savedJobs.length > 0; else noJobs">
+                        <div class="job-listing" *ngFor="let job of savedJobs">
+                            <h2>{{ job.job_title }}</h2>
+                            <div class="job-meta">
+                                <p><strong>Location:</strong> {{ job.location }}, {{ job.country }}</p>
+                                <p><strong>Type:</strong> {{ job.job_type }}</p>
+                                <p><strong>Description:</strong> {{ job.job_description }}</p>
+                                <p><strong>Education:</strong> {{ job.education }}</p>
+                                <p><strong>Experience:</strong> {{ job.experience }}</p>
+                            </div>
+                            <div class="job-actions">
+                                <button class="button-77" role="button" *ngIf="!checkJobApplStatus(job)" (click)="ApplyForJob(job)">Apply Now</button>
+                                <button class="button-77" role="button" disabled *ngIf="checkJobApplStatus(job)">Applied</button>
+                                <button class="button-77-3" role="button" (click)="viewJob(job)">View</button>
+                                <button class="button-77-2" role="button" (click)="unsaveJob(job)">Unsave</button>
+                            </div>
+                        </div>
+                    </div>
+                    <ng-template #noJobs>
+                        <div class="text-center">
+                            <h5>No saved jobs.</h5>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

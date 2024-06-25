@@ -1,0 +1,55 @@
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Job Details</h2>
+
+  <!-- Save and Apply buttons -->
+  <div class="text-center" *ngIf="(userRole$ | async) === 'jobSeeker'">
+    <button  class="button-77-2" role="button" (click)="saveJob()" *ngIf="checkJobSaving()">Save</button>
+    <button  class="button-77-2" role="button" disabled *ngIf="!checkJobSaving()">Saved</button>
+    <button  class="button-77" role="button" *ngIf="!checkJobApplStatus()" (click)="applyForJob()">Apply</button>
+    <button  class="button-77" role="button" disabled *ngIf="checkJobApplStatus()">Applied</button>
+  </div>
+
+  <!-- Job Details Card -->
+  <div *ngIf="job" class="card mt-4">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="jobTitle" class="form-label" style="font-weight: bold;">Job Title:</label>
+          <input type="text" class="form-control" id="jobTitle" [(ngModel)]="job.job_title" name="jobTitle" readonly>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="companyName" class="form-label" style="font-weight: bold;">Company Name:</label>
+          <input type="text" class="form-control" id="companyName" [(ngModel)]="job.company_name" name="companyName" readonly>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="location" class="form-label" style="font-weight: bold;">Location:</label>
+          <input type="text" class="form-control" id="location" [(ngModel)]="job.location" name="location" readonly>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="country" class="form-label" style="font-weight: bold;">Country:</label>
+          <input type="text" class="form-control" id="country" [(ngModel)]="job.country" name="country" readonly>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="jobType" class="form-label" style="font-weight: bold;">Job Type:</label>
+          <input type="text" class="form-control" id="jobType" [(ngModel)]="job.job_type" name="jobType" readonly>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="jobDescription" class="form-label" style="font-weight: bold;">Job Description:</label>
+          <textarea class="form-control" id="jobDescription" [(ngModel)]="job.job_description" name="jobDescription" readonly></textarea>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="education" class="form-label" style="font-weight: bold;">Education Required:</label>
+          <input type="text" class="form-control" id="education" [(ngModel)]="job.education" name="education" readonly>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="experience" class="form-label" style="font-weight: bold;">Experience Required:</label>
+          <input type="text" class="form-control" id="experience" [(ngModel)]="job.experience" name="experience" readonly>
+        </div>
+        <div class="col-md-12 mb-3">
+          <label for="howToApply" class="form-label" style="font-weight: bold;">How to Apply:</label>
+          <textarea class="form-control" id="howToApply" [(ngModel)]="job.how_to_apply" name="howToApply" readonly></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

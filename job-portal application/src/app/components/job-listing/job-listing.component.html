@@ -1,0 +1,64 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-6 mt-2">
+      <button *ngIf="(userRole$ | async) === 'company'" class="button-53" role="button" (click)="postJob()">Post a Job</button>      
+    </div>
+    <div class="col-6 d-flex align-items-center justify-content-center mt-2 ml-2">
+      <input type="text" class="form-control" [(ngModel)]="searchTerm" (input)="filterJobs()" placeholder="Search for jobs...">
+      <input type="text" class="form-control" [(ngModel)]="countryFilter" (input)="filterJobs()" placeholder="Filter by country...">
+    </div>
+    <div class="col-12 mt-3">
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Job Title</th>
+              <th scope="col">Company Name</th>
+              <th scope="col">Location</th>
+              <th scope="col">Job Type</th>
+              <th scope="col">Job Description</th>
+              <th *ngIf="(userRole$ | async) === 'company'" scope="col">Applied Count</th>
+              <th scope="col"  class="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let job of filteredJobs">
+              <ng-container *ngIf="((userRole$ | async) === 'company' && job.company_id === currentUserID) ||  ((userRole$ | async) === 'jobSeeker' && !job.puased)">
+              <td>{{ job.job_title }}</td>
+              <td>{{ job.company_name }}</td>
+              <td>{{ job.location }}</td>
+              <td>{{ job.job_type }}</td>
+              <td>{{ job.job_description }}</td>
+              <td *ngIf="(userRole$ | async) === 'company'">{{ job.applied_count }}</td>
+              <td>
+                <!-- Edit and Delete buttons for company -->
+                <ng-container *ngIf="(userRole$ | async) === 'company' && job.company_id === currentUserID">
+                    <button class="button-73 button-blue" (click)="editJob(job)">Edit</button>
+                    <button class="button-73 button-red" (click)="deleteJob(job)">Delete</button>
+                    <button class="button-73 button-yellow"  *ngIf="!job.puased" (click)="puaseJob(job)" >Pause</button>
+                    <button class="button-73 button-yellow" *ngIf="job.puased" (click)="unPuaseJob(job)" >UnPause</button>
+                    <button class="button-73 button-green" (click)="viewJobApplications(job)">Applications</button>
+                </ng-container>
+                <!-- Apply button for job seekers -->
+                <ng-container *ngIf="(userRole$ | async) === 'jobSeeker' && !checkJobApplStatus(job)">
+                    <button class="button-73 button-blue" (click)="ApplyForJob(job)">Apply</button>
+                </ng-container>           
+                <!-- Applied button for already applied jobs -->
+                <button class="button-73 button-blue" disabled *ngIf="checkJobApplStatus(job)">Applied</button>
+                <!-- View button for all users -->
+                <button class="button-73 button-purple" role="button" (click)="viewJob(job)">View</button>
+
+            </td>
+            </ng-container>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- Display message when no jobs are listed -->
+      <div class="w-100 h-75 d-flex flex-row justify-content-center align-items-center"
+        *ngIf="!filteredJobs || filteredJobs.length === 0">
+        <h5 class="fs-15">No jobs listed.</h5>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "job-portal-96ffe": {
+      "hosting": {
+        "job-portal": [
+          "job-portal-96ffe"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "job-portal-96ffe"
+  }
+}

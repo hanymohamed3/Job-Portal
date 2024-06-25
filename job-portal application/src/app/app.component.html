@@ -1,0 +1,47 @@
+<div class="container-fluid p-0">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" routerLink="/home-page">Job Portal</a>
+      <ng-template #notLoggedIn>
+        <span class="navbar-brand">Job Portal</span>
+      </ng-template>
+      <div class="collapse navbar-collapse justify-content-center">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a *ngIf="isLoggedIn" class="nav-link" [routerLink]="['/job-listing']">Home</a>
+          </li>
+          <li class="nav-item">
+            <!-- <a *ngIf="isLoggedIn" class="nav-link" [routerLink]="['/profile']">Profile</a> -->
+            <a *ngIf="isLoggedIn && role === 'company'" class="nav-link" [routerLink]="['/company-profile']">Profile</a>
+            <a *ngIf="isLoggedIn && role === 'jobSeeker'" class="nav-link" [routerLink]="['/profile']">Profile</a>
+
+          </li>
+          <li class="nav-item">
+            <a *ngIf="isLoggedIn && role === 'jobSeeker'" class="nav-link" [routerLink]="['/saved-jobs']">Saved Jobs</a>
+          </li>
+        </ul>
+      </div>
+      <div class="collapse navbar-collapse justify-content-end">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <!-- <a *ngIf="isLoggedIn" class="nav-link" [routerLink]="['/profile']">{{ userEmail }}</a> -->
+            <a *ngIf="isLoggedIn" class="nav-link">{{ userEmail }}</a>
+          </li>
+          <li class="nav-item">
+            <button *ngIf="isLoggedIn" class="btn btn-outline-light" (click)="logout()">Logout</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="w-100 position-relative" style="min-height: calc(100vh - 60px);">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

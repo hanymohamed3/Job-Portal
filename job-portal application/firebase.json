@@ -1,0 +1,11 @@
+{
+  "hosting": [
+    {
+      "target": "job-portal",
+      "source": ".",
+      "frameworksBackend": {
+        "region": "us-central1"
+      }
+    }
+  ]
+}

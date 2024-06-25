@@ -1,0 +1,66 @@
+<div class="container-fluid">
+    <div class="row mt-5">
+        <div class="col"></div>
+        <div class="col-5">
+            <div class="card shadow">
+                <div class="card-body">
+                    <div *ngIf="!editMode; else editModeTemplate">
+                        <!-- -------------------------------------- -->
+                        <!-- Display profile data in read-only mode -->
+                        <!-- -------------------------------------- -->
+                        <div class="nb-3">
+                            <h4 class="text-dark text-muted">Profile</h4>
+                        </div>
+                        <div class="mb-3">
+                            <p><strong>Email:</strong> {{ userEmail }}</p>
+                            <!-- Display other profile data based on user role -->
+                            <div *ngIf="userData.role === 'company'">
+                                <p><strong>Contact Info:</strong> {{ userData.contactInfo }}</p>
+                                <p><strong>Company Description:</strong> {{ userData.companyDescription }}</p>
+                                <img *ngIf="userData.logo" [src]="userData.logo" alt="Company Logo" class="img-fluid">
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-info" (click)="toggleEditMode()">Edit Profile</button>
+                    </div>
+                    <ng-template #editModeTemplate>
+                        <!-- -------------------------------------- -->
+                        <!-- Display form for updating profile data -->
+                        <!-- -------------------------------------- -->
+                        <form (ngSubmit)="updateProfile()">
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" [(ngModel)]="userEmail"
+                                    disabled>
+                            </div>
+                            <div *ngIf="userData.role === 'company'">
+                                <div class="mb-3">
+                                    <label for="contactInfo" class="form-label">Contact Info</label>
+                                    <input type="text" class="form-control" id="contactInfo" name="contactInfo"
+                                        [(ngModel)]="userData.contactInfo">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="companyDescription" class="form-label">Company Description</label>
+                                    <textarea class="form-control" id="companyDescription" name="companyDescription"
+                                        rows="3" [(ngModel)]="userData.companyDescription"></textarea>
+                                </div>
+                                <!-- Add input field for uploading company logo -->
+                                <div class="mb-3">
+                                    <label for="logo" class="form-label">Company Logo</label>
+                                    <input type="file" class="form-control" id="logo" name="logo" accept="image/*"
+                                        (change)="onLogoChange($event)">
+                                    <img *ngIf="userData.logo" [src]="userData.logo" alt="Company Logo"
+                                        class="img-fluid"> <!-- Display company logo -->
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <button type="submit" class="btn btn-info save-button">Save Changes</button>
+                                <button type="button" class="btn btn-secondary" (click)="toggleEditMode()">Cancel</button>
+                            </div>
+                        </form>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+        <div class="col"></div>
+    </div>
+</div>
